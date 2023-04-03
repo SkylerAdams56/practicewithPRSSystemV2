@@ -25,7 +25,7 @@ namespace practicewithPRSSystemV2.Controllers
         public async Task<ActionResult<Users>> login(string username, string password)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == username && x.Password == password);
-            if ( user is null)
+            if (user is null)
             {
                 return NotFound();
             }

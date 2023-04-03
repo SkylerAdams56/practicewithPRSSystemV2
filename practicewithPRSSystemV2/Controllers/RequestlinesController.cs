@@ -19,11 +19,10 @@ namespace practicewithPRSSystemV2.Controllers
         {
             _context = context;
         }
-
+        //recalculate total for requests
         private async Task<IActionResult> Recalculate(int requestId)
         {
             var request = await _context.Requests.FindAsync(requestId);
-
             request.Total = (from rl in _context.Requestlines
                              join p in _context.Products
                              on rl.ProductId equals p.Id
@@ -35,6 +34,22 @@ namespace practicewithPRSSystemV2.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
+        
+        //private async Task<IActionResult> Recalculate(int requestId)
+        //{
+        //    var request = await _context.Requests.FindAsync(requestId);
+
+        //    request.Total = (from rl in _context.Requestlines
+        //                     join p in _context.Products
+        //                     on rl.ProductId equals p.Id
+        //                     where rl.RequestId == requestId
+        //                     select new
+        //                     {
+        //                         lineTotal = rl.Quantity * p.Price
+        //                     }).Sum(x => x.lineTotal);
+        //    await _context.SaveChangesAsync();
+        //    return Ok();
+        //}
 
 
 
